@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>딥컴퍼스AI연구소 | 4060을 위한 실전 AI 교육</title>
+<meta name="description" content="딥컴퍼스AI연구소 — AI를 잘 쓰고 싶은 4060 세대를 위한 실전 AI·마케팅 교육">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dc-navy: #1E3A5F;
+    --dc-gold: #C9A84C;
+    --dc-white: #FFFFFF;
+    --dc-light-bg: #EEF2FF;
+    --dc-body: #334155;
+    --dc-caption: #64748B;
+    --dc-border: #CCCCCC;
+    --dc-dark-navy: #0D1B2E;
+    --dc-cyan: #00C8E8;
+    --dc-blue: #1B8BC9;
+    --card-1: #3B82F6;
+    --card-2: #8B5CF6;
+    --card-3: #10B981;
+    --card-4: #F97316;
+    --card-5: #EF4444;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', 'DM Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --max: 1200px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { font-family: var(--sans); color: var(--dc-body); background: var(--dc-white); line-height: 1.7; font-size: 17px; word-break: keep-all; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  section { padding: 96px 0; }
+
+  /* ---------- 공통 ---------- */
+  .eyebrow { display: inline-block; font-family: 'DM Sans', var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dc-gold); margin-bottom: 16px; }
+  .sec-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 42px); font-weight: 700; color: var(--dc-navy); line-height: 1.35; }
+  .sec-title::after { content: ''; display: block; width: 48px; height: 3px; background: var(--card-1); margin-top: 20px; }
+  .sec-title.center::after { margin-left: auto; margin-right: auto; }
+  .sec-lead { margin-top: 20px; font-size: 18px; color: var(--dc-caption); max-width: 640px; }
+  .center { text-align: center; }
+  .center .sec-lead { margin-left: auto; margin-right: auto; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; border-radius: 8px; padding: 14px 28px; letter-spacing: 0.02em; transition: filter .2s, transform .2s, background .2s; cursor: pointer; border: none; font-family: var(--sans); font-size: 16px; }
+  .btn-gold { background: var(--dc-gold); color: var(--dc-dark-navy); }
+  .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; border: 2px solid rgba(255,255,255,.5); color: #fff; }
+  .btn-ghost:hover { border-color: var(--dc-gold); color: var(--dc-gold); }
+
+  .badge { display: inline-block; background: var(--dc-cyan); color: var(--dc-dark-navy); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 100px; }
+
+  /* 스크롤 페이드업 */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+  .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ---------- 네비게이션 ---------- */
+  .nav { position: sticky; top: 0; z-index: 50; background: var(--dc-navy); border-bottom: 2px solid var(--dc-gold); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-family: var(--serif); font-weight: 700; font-size: 19px; }
+  .logo b { color: var(--dc-gold); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,.85); font-size: 15px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--dc-gold); }
+  .nav-links .btn { padding: 10px 20px; font-size: 14px; color: var(--dc-dark-navy); }
+  .menu-btn { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 8px; }
+
+  /* ---------- 히어로 ---------- */
+  .hero { position: relative; overflow: hidden; color: #fff; padding: 120px 0 128px;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(0,200,232,.22), transparent 40%),
+      radial-gradient(circle at 10% 90%, rgba(201,168,76,.18), transparent 45%),
+      linear-gradient(135deg, #0D1B2E 0%, #1E3A5F 60%, #1B8BC9 100%); }
+  .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, #000 30%, transparent); }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  .hero h1 { font-family: var(--serif); font-weight: 900; font-size: clamp(36px, 5.6vw, 64px); line-height: 1.25; margin: 20px 0 24px; }
+  .hero h1 em { font-style: normal; color: var(--dc-gold); }
+  .hero p.lead { font-size: 19px; color: rgba(255,255,255,.82); max-width: 540px; }
+  .hero-cta { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-meta { display: flex; gap: 40px; margin-top: 56px; flex-wrap: wrap; }
+  .hero-meta div strong { display: block; font-family: var(--serif); font-size: 28px; color: var(--dc-gold); }
+  .hero-meta div span { font-size: 14px; color: rgba(255,255,255,.7); }
+  .compass { width: 100%; max-width: 420px; margin: 0 auto; }
+  .compass .needle { transform-origin: 200px 200px; animation: sway 6s ease-in-out infinite; }
+  @keyframes sway { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(14deg); } }
+  .compass .ring { animation: spin 60s linear infinite; transform-origin: 200px 200px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- 문제 공감 ---------- */
+  .pain { background: var(--dc-light-bg); }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .pain-item { background: #fff; border-radius: 12px; padding: 32px 28px; box-shadow: 0 4px 24px rgba(30,58,95,.08); }
+  .pain-item .q { font-family: var(--serif); font-size: 20px; color: var(--dc-navy); font-weight: 700; margin-bottom: 12px; }
+  .pain-item p { font-size: 16px; color: var(--dc-caption); }
+  .pain-answer { margin-top: 48px; text-align: center; font-family: var(--serif); font-size: clamp(20px, 2.6vw, 26px); color: var(--dc-navy); }
+  .pain-answer b { color: var(--dc-gold); background: linear-gradient(transparent 60%, rgba(201,168,76,.25) 60%); }
+
+  /* ---------- 프로그램 카드 ---------- */
+  .programs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 56px; }
+  .dc-card { background: #fff; border-radius: 12px; border-left: 4px solid var(--accent, var(--card-1)); box-shadow: 0 4px 24px rgba(30,58,95,.10); padding: 36px 32px; transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; }
+  .dc-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(30,58,95,.18); }
+  .dc-card .ico { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 12%, white); color: var(--accent); margin-bottom: 20px; }
+  .dc-card h3 { font-family: var(--serif); font-size: 22px; color: var(--dc-navy); margin-bottom: 10px; }
+  .dc-card p { font-size: 16px; color: var(--dc-caption); flex: 1; }
+  .dc-card .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .dc-card .tags span { font-size: 13px; padding: 4px 12px; border-radius: 100px; background: var(--dc-light-bg); color: var(--dc-navy); font-weight: 500; }
+
+  /* ---------- 커리큘럼 ---------- */
+  .curri { background: var(--dc-dark-navy); color: #fff; position: relative; overflow: hidden; }
+  .curri::before, .curri::after { content: ''; position: absolute; border-radius: 50%; }
+  .curri::before { width: 520px; height: 520px; background: rgba(26,42,94,.6); top: -200px; right: -160px; }
+  .curri::after { width: 360px; height: 360px; background: rgba(37,47,110,.5); bottom: -160px; left: -120px; }
+  .curri .wrap { position: relative; z-index: 1; }
+  .curri .sec-title { color: #fff; }
+  .curri .sec-lead { color: rgba(255,255,255,.7); }
+  .tabs { display: flex; gap: 8px; margin-top: 48px; flex-wrap: wrap; }
+  .tab { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.8); padding: 12px 22px; border-radius: 100px; cursor: pointer; font-family: var(--sans); font-size: 15px; font-weight: 500; transition: all .2s; }
+  .tab:hover { border-color: var(--dc-cyan); color: #fff; }
+  .tab[aria-selected="true"] { background: var(--dc-cyan); color: var(--dc-dark-navy); border-color: var(--dc-cyan); font-weight: 700; }
+  .panel { display: none; margin-top: 32px; }
+  .panel.active { display: block; animation: fadeUp .45s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .weeks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .week { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 24px; transition: border-color .2s, background .2s; }
+  .week:hover { border-color: var(--dc-cyan); background: rgba(0,200,232,.06); }
+  .week .no { font-family: var(--mono); font-size: 13px; color: var(--dc-cyan); }
+  .week h4 { font-size: 18px; margin: 8px 0 8px; color: #fff; }
+  .week p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.6; }
+  .prompt-box { margin-top: 32px; background: rgba(0,0,0,.3); border: 1px solid rgba(0,200,232,.3); border-radius: 12px; padding: 20px 24px; font-family: var(--mono); font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.8; }
+  .prompt-box .k { color: var(--dc-cyan); }
+  .prompt-box .g { color: #EAB308; }
+
+  /* ---------- 강사 ---------- */
+  .lab { background: var(--dc-light-bg); }
+  .lab .wrap { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: center; }
+  .photo { aspect-ratio: 4/5; border-radius: 16px; background: linear-gradient(160deg, #D6E4F0, #EEF2FF); border: 2px dashed #9FB3CC; display: grid; place-items: center; color: var(--dc-caption); font-size: 15px; text-align: center; position: relative; }
+  .photo::after { content: ''; position: absolute; inset: 20px -20px -20px 20px; border: 2px solid var(--dc-gold); border-radius: 16px; z-index: -1; }
+  .lab-points { margin-top: 32px; display: grid; gap: 16px; }
+  .lab-points li { list-style: none; display: flex; gap: 14px; align-items: flex-start; font-size: 17px; }
+  .lab-points li svg { flex: none; margin-top: 4px; color: var(--dc-gold); }
+
+  /* ---------- 후기 ---------- */
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .review { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px 28px; position: relative; }
+  .review::before { content: '“'; position: absolute; top: 8px; right: 24px; font-family: var(--serif); font-size: 80px; color: var(--dc-gold); opacity: .3; line-height: 1; }
+  .review p { font-size: 16px; color: var(--dc-body); }
+  .review .who { margin-top: 20px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--dc-caption); }
+  .review .who .av { width: 40px; height: 40px; border-radius: 50%; background: var(--dc-navy); color: var(--dc-gold); display: grid; place-items: center; font-weight: 700; font-family: var(--serif); }
+  .review .who strong { display: block; color: var(--dc-navy); font-size: 15px; }
+
+  /* ---------- FAQ ---------- */
+  .faq { background: var(--dc-light-bg); }
+  .faq-list { max-width: 800px; margin: 48px auto 0; }
+  .faq-item { background: #fff; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(30,58,95,.06); overflow: hidden; }
+  .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 22px 28px; font-family: var(--sans); font-size: 17px; font-weight: 700; color: var(--dc-navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q .plus { flex: none; width: 24px; height: 24px; position: relative; }
+  .faq-q .plus::before, .faq-q .plus::after { content: ''; position: absolute; background: var(--dc-gold); left: 50%; top: 50%; transform: translate(-50%,-50%); transition: transform .25s; }
+  .faq-q .plus::before { width: 14px; height: 2px; }
+  .faq-q .plus::after { width: 2px; height: 14px; }
+  .faq-q[aria-expanded="true"] .plus::after { transform: translate(-50%,-50%) rotate(90deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+  .faq-a p { padding: 0 28px 24px; color: var(--dc-caption); font-size: 16px; }
+
+  /* ---------- 신청 ---------- */
+  .apply { background: linear-gradient(135deg, #0D1B2E 0%, #1E3A5F 100%); color: #fff; }
+  .apply .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .apply .sec-title { color: #fff; }
+  .apply .sec-lead { color: rgba(255,255,255,.75); }
+  .form { background: #fff; border-radius: 16px; padding: 40px 36px; color: var(--dc-body); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+  .form h3 { font-family: var(--serif); color: var(--dc-navy); font-size: 22px; margin-bottom: 24px; }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 14px; font-weight: 700; color: var(--dc-navy); margin-bottom: 6px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 13px 14px; border: 1px solid var(--dc-border); border-radius: 8px; font-family: var(--sans); font-size: 16px; color: var(--dc-body); background: #fff; transition: border-color .2s, box-shadow .2s; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--dc-blue); box-shadow: 0 0 0 3px rgba(27,139,201,.15); }
+  .field.err input, .field.err select { border-color: #CC0000; }
+  .field .msg { font-size: 13px; color: #CC0000; margin-top: 4px; display: none; }
+  .field.err .msg { display: block; }
+  .check { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--dc-caption); margin: 8px 0 24px; }
+  .check input { margin-top: 5px; accent-color: var(--dc-navy); }
+  .form .btn { width: 100%; justify-content: center; }
+  .done { display: none; text-align: center; padding: 32px 0; }
+  .done .ok { width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%; background: #D4EDDA; display: grid; place-items: center; color: #10B981; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.35); } 50% { box-shadow: 0 0 0 14px rgba(16,185,129,0); } }
+  .done h3 { margin-bottom: 8px; }
+
+  /* ---------- 푸터 ---------- */
+  footer { background: var(--dc-navy); color: rgba(255,255,255,.65); padding: 48px 0 32px; font-size: 14px; border-top: 2px solid var(--dc-gold); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+  footer .links { display: flex; gap: 24px; }
+  footer .links a:hover { color: var(--dc-gold); }
+
+  .top-btn { position: fixed; right: 24px; bottom: 24px; width: 48px; height: 48px; border-radius: 50%; background: var(--dc-gold); color: var(--dc-dark-navy); border: none; cursor: pointer; display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.2); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 40; }
+  .top-btn.show { opacity: 1; pointer-events: auto; }
+
+  /* ---------- 반응형 ---------- */
+  @media (max-width: 960px) {
+    section { padding: 72px 0; }
+    .hero { padding: 80px 0 96px; }
+    .hero .wrap, .lab .wrap, .apply .wrap { grid-template-columns: 1fr; gap: 48px; }
+    .compass { max-width: 300px; }
+    .pain-grid, .reviews-grid { grid-template-columns: 1fr; }
+    .weeks { grid-template-columns: repeat(2, 1fr); }
+    .photo { max-width: 380px; }
+  }
+  @media (max-width: 760px) {
+    .menu-btn { display: block; }
+    .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: var(--dc-navy); flex-direction: column; gap: 0; padding: 8px 24px 24px; border-bottom: 2px solid var(--dc-gold); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 14px 0; width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .nav-links .btn { margin-top: 16px; justify-content: center; }
+    .programs-grid, .weeks { grid-template-columns: 1fr; }
+    .wrap { padding: 0 16px; }
+    .form { padding: 32px 22px; }
+    .hero-meta { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 네비게이션 -->
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="딥컴퍼스AI연구소 홈">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="#C9A84C" stroke-width="2"/><path d="M16 5 L20 16 L16 27 L12 16 Z" fill="#C9A84C"/><path d="M16 16 L12 16 L16 27 Z" fill="#fff" opacity=".85"/></svg>
+      <span>딥컴퍼스<b>AI</b>연구소</span>
+    </a>
+    <button class="menu-btn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="navLinks" aria-label="주요 메뉴">
+      <a href="#programs">프로그램</a>
+      <a href="#curriculum">커리큘럼</a>
+      <a href="#lab">연구소 소개</a>
+      <a href="#reviews">수강 후기</a>
+      <a href="#faq">자주 묻는 질문</a>
+      <a href="#apply" class="btn btn-gold">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- 히어로 -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="badge reveal">AI · 마케팅 실전 교육</span>
+      <h1 class="reveal d1">AI 시대,<br>방향을 잃지 않도록<br><em>깊이 있는 나침반</em>이 되겠습니다</h1>
+      <p class="lead reveal d2">어렵게만 느껴지던 AI를 내 일과 생활에 바로 쓰는 도구로.<br>딥컴퍼스AI연구소는 4060 세대가 자신 있게 AI를 다루도록 돕는 실전 교육 연구소입니다.</p>
+      <div class="hero-cta reveal d3">
+        <a href="#apply" class="btn btn-gold">무료 상담 신청하기
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#curriculum" class="btn btn-ghost">커리큘럼 보기</a>
+      </div>
+      <div class="hero-meta reveal d4">
+        <div><strong>100%</strong><span>실습 중심 수업</span></div>
+        <div><strong>1:1</strong><span>과제 피드백</span></div>
+        <div><strong>4060</strong><span>눈높이 맞춤 설계</span></div>
+      </div>
+    </div>
+    <svg class="compass reveal d2" viewBox="0 0 400 400" fill="none" role="img" aria-label="나침반 일러스트">
+      <circle cx="200" cy="200" r="190" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+      <g class="ring">
+        <circle cx="200" cy="200" r="170" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="2 10"/>
+        <circle cx="200" cy="30" r="5" fill="#00C8E8"/>
+        <circle cx="370" cy="200" r="4" fill="#C9A84C"/>
+        <circle cx="80" cy="320" r="3" fill="#00C8E8"/>
+      </g>
+      <circle cx="200" cy="200" r="140" fill="rgba(13,27,46,.55)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+      <circle cx="200" cy="200" r="118" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+      <g font-family="Noto Serif KR, serif" font-size="20" font-weight="700" text-anchor="middle" fill="#fff">
+        <text x="200" y="92" fill="#C9A84C">N</text><text x="200" y="322">S</text><text x="312" y="207">E</text><text x="88" y="207">W</text>
+      </g>
+      <g stroke="rgba(255,255,255,.35)" stroke-width="2">
+        <line x1="200" y1="64" x2="200" y2="74"/><line x1="200" y1="326" x2="200" y2="336"/><line x1="64" y1="200" x2="74" y2="200"/><line x1="326" y1="200" x2="336" y2="200"/>
+      </g>
+      <g class="needle">
+        <path d="M200 100 L218 200 L200 210 L182 200 Z" fill="#C9A84C"/>
+        <path d="M200 300 L218 200 L200 190 L182 200 Z" fill="#E2E8F0" opacity=".9"/>
+        <circle cx="200" cy="200" r="10" fill="#0D1B2E" stroke="#00C8E8" stroke-width="3"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- 공감 -->
+<section class="pain">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">Why DeepCompass</span>
+      <h2 class="sec-title center reveal d1">혹시 이런 고민, 하고 계신가요?</h2>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-item reveal d1">
+        <div class="q">“챗GPT, 들어는 봤는데…”</div>
+        <p>가입은 했지만 무엇을 물어봐야 할지 막막하고, 몇 번 써 보다 그만두셨나요?</p>
+      </div>
+      <div class="pain-item reveal d2">
+        <div class="q">“젊은 사람들은 금방 하던데”</div>
+        <p>유튜브 강의는 너무 빠르고, 용어는 낯설어서 따라가기 버거우셨나요?</p>
+      </div>
+      <div class="pain-item reveal d3">
+        <div class="q">“내 일에 어떻게 쓰지?”</div>
+        <p>신기하긴 한데, 내 사업·업무·홍보에 실제로 어떻게 연결할지 감이 오지 않으셨나요?</p>
+      </div>
+    </div>
+    <p class="pain-answer reveal">늦은 게 아닙니다. <b>방향만 제대로 잡으면</b> 누구나 AI를 잘 쓸 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- 프로그램 -->
+<section id="programs">
+  <div class="wrap">
+    <span class="eyebrow reveal">Programs</span>
+    <h2 class="sec-title reveal d1">목적에 맞게 고르는<br>네 가지 프로그램</h2>
+    <p class="sec-lead reveal d2">처음 시작하는 분부터 사업에 바로 적용하고 싶은 분까지, 수준과 목표에 맞춰 단계별로 설계했습니다.</p>
+    <div class="programs-grid">
+      <article class="dc-card reveal d1" style="--accent: var(--card-1)">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h3>AI 첫걸음 기초반</h3>
+        <p>챗GPT·클로드 같은 AI 도구 가입부터 좋은 질문 만드는 법까지. 스마트폰과 PC 모두에서 차근차근 따라 합니다.</p>
+        <div class="tags"><span>입문</span><span>4주</span><span>소수 정예</span></div>
+      </article>
+      <article class="dc-card reveal d2" style="--accent: var(--card-2)">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></div>
+        <h3>AI 마케팅 실전반</h3>
+        <p>블로그 글, 인스타 카드뉴스, 상세페이지 문구까지. AI로 내 가게와 브랜드를 알리는 콘텐츠를 직접 만들어 봅니다.</p>
+        <div class="tags"><span>중급</span><span>8주</span><span>결과물 완성</span></div>
+      </article>
+      <article class="dc-card reveal d1" style="--accent: var(--card-3)">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div>
+        <h3>업무 자동화 클래스</h3>
+        <p>문서 작성, 보고서 정리, 엑셀 업무를 AI에게 맡기는 법. 매일 반복되는 일을 줄이고 시간을 되찾습니다.</p>
+        <div class="tags"><span>중급</span><span>6주</span><span>직장인·자영업</span></div>
+      </article>
+      <article class="dc-card reveal d2" style="--accent: var(--card-4)">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>기업·기관 맞춤 출강</h3>
+        <p>조직의 업무 환경과 수준을 진단해 맞춤 커리큘럼으로 찾아갑니다. 임직원 AI 역량 교육과 워크숍을 함께 설계합니다.</p>
+        <div class="tags"><span>B2B</span><span>맞춤 설계</span><span>출강·워크숍</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 커리큘럼 -->
+<section class="curri" id="curriculum">
+  <div class="wrap">
+    <span class="eyebrow reveal">Curriculum</span>
+    <h2 class="sec-title reveal d1">따라오기만 하면 되는<br>단계별 커리큘럼</h2>
+    <p class="sec-lead reveal d2">매주 배운 내용을 바로 실습하고, 과제로 내 것으로 만듭니다.</p>
+
+    <div class="tabs reveal d3" role="tablist" aria-label="과정 선택">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-basic" id="t-basic">AI 첫걸음 기초반</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-mkt" id="t-mkt" tabindex="-1">AI 마케팅 실전반</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-auto" id="t-auto" tabindex="-1">업무 자동화 클래스</button>
+    </div>
+
+    <div class="panel active" id="p-basic" role="tabpanel" aria-labelledby="t-basic">
+      <div class="weeks">
+        <div class="week"><span class="no">WEEK 01</span><h4>AI와 첫인사</h4><p>AI 도구 가입하고, 첫 대화를 나눠 봅니다. 무엇을 할 수 있고 무엇을 조심해야 할까요?</p></div>
+        <div class="week"><span class="no">WEEK 02</span><h4>질문하는 법</h4><p>원하는 답을 얻는 질문의 공식. 역할·상황·형식을 담아 묻는 연습을 합니다.</p></div>
+        <div class="week"><span class="no">WEEK 03</span><h4>생활 속 AI</h4><p>여행 계획, 건강 정보 정리, 손주에게 보낼 동화까지. 일상에서 바로 써 봅니다.</p></div>
+        <div class="week"><span class="no">WEEK 04</span><h4>나만의 활용법</h4><p>나에게 꼭 맞는 질문 모음집을 만들고, 앞으로의 학습 방향을 정합니다.</p></div>
+      </div>
+    </div>
+    <div class="panel" id="p-mkt" role="tabpanel" aria-labelledby="t-mkt" hidden>
+      <div class="weeks">
+        <div class="week"><span class="no">WEEK 01–02</span><h4>브랜드 정리</h4><p>AI와 함께 내 고객, 내 강점, 내 말투를 정리하고 콘텐츠 방향을 잡습니다.</p></div>
+        <div class="week"><span class="no">WEEK 03–04</span><h4>글쓰기 자동화</h4><p>블로그·소식지·홍보 문구를 AI로 초안 잡고, 내 목소리로 다듬는 법을 익힙니다.</p></div>
+        <div class="week"><span class="no">WEEK 05–06</span><h4>이미지·카드뉴스</h4><p>이미지 생성 AI와 디자인 도구로 인스타그램 카드뉴스를 직접 완성합니다.</p></div>
+        <div class="week"><span class="no">WEEK 07–08</span><h4>운영과 분석</h4><p>게시 일정 세우기, 반응 분석, 다음 콘텐츠 기획까지 한 바퀴를 돌려 봅니다.</p></div>
+      </div>
+    </div>
+    <div class="panel" id="p-auto" role="tabpanel" aria-labelledby="t-auto" hidden>
+      <div class="weeks">
+        <div class="week"><span class="no">WEEK 01–02</span><h4>문서 업무</h4><p>회의록, 보고서, 공문 초안을 AI로 빠르게 정리하고 검토하는 법을 배웁니다.</p></div>
+        <div class="week"><span class="no">WEEK 03</span><h4>엑셀·데이터</h4><p>수식이 어려워도 괜찮습니다. AI에게 말로 설명하고 표와 수식을 받습니다.</p></div>
+        <div class="week"><span class="no">WEEK 04–05</span><h4>반복 업무 줄이기</h4><p>매번 하는 일을 템플릿과 자동화 도구로 묶어 시간을 아낍니다.</p></div>
+        <div class="week"><span class="no">WEEK 06</span><h4>나만의 업무 비서</h4><p>내 업무에 맞춘 AI 비서 설정을 완성하고 실제 업무에 적용합니다.</p></div>
+      </div>
+    </div>
+
+    <div class="prompt-box reveal" aria-label="수업 중 사용하는 프롬프트 예시">
+      <span class="k">## 수업 실습 예시</span><br>
+      너는 <span class="g">20년 경력의 동네 빵집 마케터</span>야.<br>
+      우리 가게의 <span class="g">새 메뉴 '쑥 앙버터'</span>를 알리는 인스타그램 글을 써 줘.<br>
+      대상은 <span class="g">40~60대 단골 손님</span>, 말투는 따뜻하고 정중하게, 3문장 이내로.
+    </div>
+  </div>
+</section>
+
+<!-- 연구소 소개 -->
+<section class="lab" id="lab">
+  <div class="wrap">
+    <div class="photo reveal" aria-label="대표 강사 사진 자리">대표 강사 사진<br><small>(이미지 교체 영역)</small></div>
+    <div>
+      <span class="eyebrow reveal">About the Lab</span>
+      <h2 class="sec-title reveal d1">기술보다 사람을 먼저 보는<br>AI 교육 연구소</h2>
+      <p class="sec-lead reveal d2">딥컴퍼스(DeepCompass)는 ‘깊이 있는 나침반’이라는 뜻입니다. 빠르게 변하는 AI 흐름 속에서 유행을 좇기보다, 배우는 분이 스스로 방향을 찾을 수 있도록 돕는 것을 목표로 합니다.</p>
+      <ul class="lab-points">
+        <li class="reveal d2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>천천히, 하지만 확실하게</b> — 어려운 용어 없이, 한 단계씩 손으로 따라 합니다.</span></li>
+        <li class="reveal d3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>배운 날 바로 쓰는 실습</b> — 수업이 끝나면 내 손에 결과물이 남습니다.</span></li>
+        <li class="reveal d4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>수업 후에도 함께</b> — 과제 피드백과 질문 채널로 끝까지 곁에 있습니다.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 후기 -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">Reviews</span>
+      <h2 class="sec-title center reveal d1">먼저 시작한 분들의 이야기</h2>
+    </div>
+    <!-- 아래 후기는 예시 문구입니다. 실제 수강생 후기로 교체해 주세요. -->
+    <div class="reviews-grid">
+      <div class="review reveal d1">
+        <p>예순 넘어 무슨 AI냐 했는데, 이제는 가게 홍보 글을 제가 직접 씁니다. 모르는 걸 몇 번이고 물어봐도 친절하게 알려 주셔서 끝까지 했어요.</p>
+        <div class="who"><div class="av">김</div><div><strong>김○○ 님</strong>60대 · 카페 운영</div></div>
+      </div>
+      <div class="review reveal d2">
+        <p>매주 쓰던 보고서를 AI로 정리하니 퇴근이 한 시간 빨라졌습니다. 회사에서 저한테 AI 쓰는 법을 물어봐요.</p>
+        <div class="who"><div class="av">이</div><div><strong>이○○ 님</strong>50대 · 회사원</div></div>
+      </div>
+      <div class="review reveal d3">
+        <p>유튜브로는 늘 중간에 포기했는데, 여기서는 제 속도에 맞춰 주니까 자신감이 생겼어요. 카드뉴스도 처음 만들어 봤습니다.</p>
+        <div class="who"><div class="av">박</div><div><strong>박○○ 님</strong>40대 · 1인 사업가</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow reveal">FAQ</span>
+      <h2 class="sec-title center reveal d1">자주 묻는 질문</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">컴퓨터를 잘 못 다뤄도 들을 수 있나요?<span class="plus" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>네, 가능합니다. 기초반은 회원가입과 로그인부터 함께 시작합니다. 스마트폰만 있어도 수업의 대부분을 따라오실 수 있도록 구성했습니다.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">유료 AI 프로그램을 따로 결제해야 하나요?<span class="plus" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>기본 수업은 무료 버전으로 충분히 진행합니다. 유료 기능이 필요한 실습은 미리 안내드리고, 필요 여부를 직접 판단하실 수 있도록 비교해 드립니다.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">온라인 수업도 있나요?<span class="plus" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>오프라인 소수 정예 수업과 실시간 온라인 수업을 함께 운영합니다. 상담 시 편하신 방식을 말씀해 주시면 일정에 맞춰 안내해 드립니다.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">회사나 기관 단체 교육도 가능한가요?<span class="plus" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>가능합니다. 조직의 업무와 수강자 수준을 먼저 진단한 뒤 맞춤 커리큘럼을 제안해 드립니다. 아래 상담 신청서에서 ‘기업·기관 맞춤 출강’을 선택해 주세요.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 신청 -->
+<section class="apply" id="apply">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow reveal">Contact</span>
+      <h2 class="sec-title reveal d1">지금이 가장<br>빠른 때입니다</h2>
+      <p class="sec-lead reveal d2">무료 상담을 신청하시면 현재 수준과 목표를 함께 살펴보고, 가장 잘 맞는 과정을 안내해 드립니다. 부담 없이 문의해 주세요.</p>
+    </div>
+    <div class="form reveal d2">
+      <form id="applyForm" novalidate>
+        <h3>무료 상담 신청</h3>
+        <div class="field">
+          <label for="name">이름</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="홍길동">
+          <div class="msg">이름을 입력해 주세요.</div>
+        </div>
+        <div class="field">
+          <label for="phone">연락처</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="010-1234-5678" inputmode="numeric">
+          <div class="msg">연락 가능한 휴대폰 번호를 입력해 주세요.</div>
+        </div>
+        <div class="field">
+          <label for="course">관심 과정</label>
+          <select id="course" name="course">
+            <option value="">선택해 주세요</option>
+            <option>AI 첫걸음 기초반</option>
+            <option>AI 마케팅 실전반</option>
+            <option>업무 자동화 클래스</option>
+            <option>기업·기관 맞춤 출강</option>
+            <option>아직 잘 모르겠어요</option>
+          </select>
+          <div class="msg">관심 과정을 선택해 주세요.</div>
+        </div>
+        <div class="field">
+          <label for="memo">남기실 말씀 (선택)</label>
+          <textarea id="memo" name="memo" rows="3" placeholder="궁금한 점이나 원하는 상담 시간을 적어 주세요."></textarea>
+        </div>
+        <label class="check"><input type="checkbox" id="agree"> <span>상담 안내를 위한 개인정보 수집·이용에 동의합니다.</span></label>
+        <button type="submit" class="btn btn-gold">상담 신청하기</button>
+      </form>
+      <div class="done" id="done" role="status" aria-live="polite">
+        <div class="ok"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>신청이 접수되었습니다</h3>
+        <p id="doneMsg">빠른 시일 내에 연락드리겠습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="logo" style="margin-bottom:8px"><span>딥컴퍼스<b>AI</b>연구소</span></div>
+      <div>AI 시대의 깊이 있는 나침반</div>
+    </div>
+    <div class="links">
+      <a href="#programs">프로그램</a><a href="#curriculum">커리큘럼</a><a href="#apply">상담 신청</a>
+    </div>
+    <div>© 2026 DeepCompass AI Lab. All rights reserved.</div>
+  </div>
+</footer>
+
+<button class="top-btn" id="topBtn" aria-label="맨 위로 이동">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+  // 스크롤 페이드업
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // 모바일 메뉴
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false);
+  }));
+
+  // 커리큘럼 탭
+  const tabs = [...document.querySelectorAll('.tab')];
+  function selectTab(tab) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      panel.hidden = !on;
+      panel.classList.toggle('active', on);
+    });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(tab));
+    tab.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      selectTab(next); next.focus();
+    });
+  });
+
+  // FAQ 아코디언
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const a = q.nextElementSibling;
+      const open = q.getAttribute('aria-expanded') === 'true';
+      q.setAttribute('aria-expanded', !open);
+      a.style.maxHeight = open ? null : a.scrollHeight + 'px';
+    });
+  });
+
+  // 연락처 자동 하이픈
+  const phone = document.getElementById('phone');
+  phone.addEventListener('input', () => {
+    const d = phone.value.replace(/\D/g, '').slice(0, 11);
+    phone.value = d.length < 4 ? d : d.length < 8 ? `${d.slice(0,3)}-${d.slice(3)}` : `${d.slice(0,3)}-${d.slice(3, d.length - 4)}-${d.slice(-4)}`;
+  });
+
+  // 신청 폼 검증 (서버 연동 전: 화면에서만 접수 처리)
+  const form = document.getElementById('applyForm');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const checks = [
+      ['name', v => v.trim().length >= 2],
+      ['phone', v => /^01[016789]-?\d{3,4}-?\d{4}$/.test(v)],
+      ['course', v => v !== '']
+    ];
+    let ok = true;
+    checks.forEach(([id, test]) => {
+      const el = document.getElementById(id);
+      const pass = test(el.value);
+      el.closest('.field').classList.toggle('err', !pass);
+      if (!pass && ok) { el.focus(); ok = false; }
+    });
+    const agree = document.getElementById('agree');
+    if (ok && !agree.checked) { alertAgree(agree); return; }
+    if (!ok) return;
+    document.getElementById('doneMsg').textContent =
+      `${form.name.value.trim()} 님, '${form.course.value}' 상담 신청이 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.`;
+    form.style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+  });
+  function alertAgree(el) {
+    const label = el.closest('.check');
+    label.style.color = '#CC0000';
+    el.focus();
+    setTimeout(() => label.style.color = '', 2000);
+  }
+  form.querySelectorAll('input, select').forEach(el =>
+    el.addEventListener('input', () => el.closest('.field')?.classList.remove('err')));
+
+  // 맨 위로 버튼
+  const topBtn = document.getElementById('topBtn');
+  addEventListener('scroll', () => topBtn.classList.toggle('show', scrollY > 600), { passive: true });
+  topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
